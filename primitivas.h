@@ -1,4 +1,3 @@
-#include <stdlib.h>
 
 typedef struct image_t
 {

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "primitivas.h"
 
 int main()
@@ -10,11 +11,14 @@ int main()
     FILE *aux;
 
     int operacao;
+    image imagem;
+    color cor;
 
     arquivo = fopen("arquivo_de_especificacao.txt", "r");
     arquivo_ppm = fopen("arquivo_auxiliar.ppm", "w+");
 
     fprintf(arquivo_ppm, "P3\n");
+    fprintf(arquivo_ppm, "255\n");
 
     while(!feof(arquivo))
     {
@@ -33,12 +37,21 @@ int main()
 
             if (operacao == 0)
             {
-                image imagem;
-
                 imagem.largura = atoi(strtok(NULL, " "));
                 imagem.altura = atoi(strtok(NULL, " "));
 
                fprintf(arquivo_ppm, "%d %d\n", imagem.largura, imagem.altura);
+
+                cor.r = 0;
+                cor.g = 255;
+                cor.b = 0;
+                
+                int quantidade_de_linhas = imagem.largura * imagem.altura;
+
+                for (int i = 0; i < quantidade_de_linhas; i++)
+                {
+                    fprintf(arquivo_ppm, "%d %d %d\n", cor.r, cor.g, cor.b);
+                }
 
                continue;
             }
@@ -57,6 +70,7 @@ int main()
                 
                 char linha_ppm[100];
                 char *result_ppm;
+
                 while(!feof(aux))
                 {
         
