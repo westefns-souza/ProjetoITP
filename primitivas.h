@@ -1,9 +1,4 @@
 
-typedef struct image_t
-{
-    int largura;
-    int altura;
-} image;
 
 
 typedef struct color_t
@@ -12,6 +7,14 @@ typedef struct color_t
     int g;
     int b;
 } color;
+
+typedef struct image_t
+{
+    int largura;
+    int altura;
+
+    color** pixels;
+} image;
 
 typedef struct ponto_t
 {

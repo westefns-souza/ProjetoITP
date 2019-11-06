@@ -1,31 +1,23 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "primitivas.h"
+#include "funcoes.c"
 
 int main()
 {
-    FILE* arquivo;
-    FILE* arquivo_ppm;
-    FILE *save;
-    FILE *aux;
+    FILE* arquivo_de_especificacao = fopen("arquivo_de_especificacao.txt", "r");;
+    FILE* arquivo_auxiliar = fopen("arquivo_auxiliar.ppm", "w+");;
 
     int operacao;
-    image imagem;
-    color cor;
+    image* imagem;
+    color* cor;
 
-    arquivo = fopen("arquivo_de_especificacao.txt", "r");
-    arquivo_ppm = fopen("arquivo_auxiliar.ppm", "w+");
-
-    fprintf(arquivo_ppm, "P3\n");
-    fprintf(arquivo_ppm, "255\n");
-
-    while(!feof(arquivo))
+    while(!feof(arquivo_de_especificacao))
     {
         char linha[100];
         char *result;
         
-        result = fgets(linha, 100, arquivo);
+        result = fgets(linha, 100, arquivo_de_especificacao);
 
         if (result)
         {
@@ -37,22 +29,20 @@ int main()
 
             if (operacao == 0)
             {
-                imagem.largura = atoi(strtok(NULL, " "));
-                imagem.altura = atoi(strtok(NULL, " "));
-
-               fprintf(arquivo_ppm, "%d %d\n", imagem.largura, imagem.altura);
-
-                cor.r = 0;
-                cor.g = 255;
-                cor.b = 0;
+                imagem->largura = atoi(strtok(NULL, " "));
+                imagem->altura = atoi(strtok(NULL, " "));
                 
-                int quantidade_de_linhas = imagem.largura * imagem.altura;
+                color pixels[imagem->largura][imagem->altura];
+                imagem->pixels = (color**) pixels;
+                
+                cor->r = 0;
+                cor->g = 255;
+                cor->b = 0;
+                
+                preencher_imagem(imagem, cor);
 
-                for (int i = 0; i < quantidade_de_linhas; i++)
-                {
-                    fprintf(arquivo_ppm, "%d %d %d\n", cor.r, cor.g, cor.b);
-                }
-
+                gerar_arquivo(arquivo_auxiliar, imagem);
+                            
                continue;
             }
 
@@ -60,21 +50,22 @@ int main()
 
             if (operacao == 0)
             {
+
                 char *nome_do_arquivo = strtok(NULL, " ");
 
-                save = fopen(nome_do_arquivo, "w+");
+                FILE* save = fopen(nome_do_arquivo, "w+");
 
-                fclose(arquivo_ppm);
+                fclose(arquivo_auxiliar);
 
-                aux = fopen("arquivo_auxiliar.ppm", "r");
+                arquivo_auxiliar = fopen("arquivo_auxiliar.ppm", "r");
                 
                 char linha_ppm[100];
                 char *result_ppm;
 
-                while(!feof(aux))
+                while(!feof(arquivo_auxiliar))
                 {
         
-                    result_ppm = fgets(linha_ppm, 100, aux);
+                    result_ppm = fgets(linha_ppm, 100, arquivo_auxiliar);
                     
                     if (result_ppm)
                     {
@@ -82,15 +73,18 @@ int main()
                     }
                 }
 
-                fclose(aux);
+                fclose(arquivo_auxiliar);
+                arquivo_auxiliar = fopen("arquivo_auxiliar.ppm", "a");
+
+                fclose(save);
 
                continue;
             }
         }
     }
-    
-    fclose(save);
-    fclose(arquivo);
+
+    fclose(arquivo_auxiliar);
+    fclose(arquivo_de_especificacao);
 
     return 0;
 }
