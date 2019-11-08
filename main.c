@@ -5,11 +5,22 @@
 
 int main()
 {
+    FILE* arquivo_de_especificacao;
+    FILE* arquivo_auxiliar;
+
+    int operacao;
+    image* imagem;
+    color* cor_1;
+    color* cor_2;
+    line* reta;
+
     arquivo_de_especificacao = fopen("arquivo_de_especificacao.txt", "r");;
-    arquivo_auxiliar = fopen("arquivo_auxiliar.ppm", "w+");;
+    arquivo_auxiliar = fopen("arquivo_auxiliar.ppm", "w+");
 
     imagem = malloc(sizeof(image));
-    cor = malloc(sizeof(color));
+    cor_1 = malloc(sizeof(color));
+    cor_2 = malloc(sizeof(color));
+    
     reta = malloc(sizeof(line));
     reta->ponto_inicial = malloc(sizeof(ponto));
     reta->ponto_final = malloc(sizeof(ponto));
@@ -34,20 +45,18 @@ int main()
                 imagem->largura = atoi(strtok(NULL, " "));
                 imagem->altura = atoi(strtok(NULL, " "));
 
-                imagem->pixels = malloc(sizeof(color)*imagem->largura);
+                imagem->pixels = malloc(sizeof(color)*imagem->altura);
 
                 for (int i = 0; i < imagem->largura; i++)
                 {
-                    imagem->pixels[i] = malloc(sizeof(color)*imagem->altura);
+                    imagem->pixels[i] = malloc(sizeof(color)*imagem->largura);
                 }
 
-                cor->r = 255;
-                cor->g = 255;
-                cor->b = 255;
+                cor_1->r = 0;
+                cor_1->g = 0;
+                cor_1->b = 0;
 
-                preencher_imagem(imagem, cor);
-
-                gerar_arquivo(arquivo_auxiliar, imagem);
+                preencher_imagem(imagem, cor_1);
 
                continue;
             }
@@ -62,13 +71,12 @@ int main()
                 reta->ponto_final->x = atoi(strtok(NULL, " "));
                 reta->ponto_final->y = atoi(strtok(NULL, " "));
 
-                cor->r = 0;
-                cor->g = 0;
-                cor->b = 0;
+                cor_2->r = 0;
+                cor_2->g = 200;
+                cor_2->b = 0;
 
-                gerar_linha(imagem, reta, cor);
-
-                gerar_arquivo(arquivo_auxiliar, imagem);
+                gerar_linha(imagem, reta, cor_2);
+                continue;
             }
 
             operacao = strcmp(token, "save");
@@ -77,6 +85,7 @@ int main()
             {
 
                 char *nome_do_arquivo = strtok(NULL, " ");
+                gerar_arquivo(arquivo_auxiliar, imagem);
 
                 FILE* save = fopen(nome_do_arquivo, "w+");
 
@@ -108,7 +117,8 @@ int main()
         }
     }
 
-    free(cor);
+    free(cor_1);
+    free(cor_2);
 
     for (int i = 0; i < imagem->largura; i++)
         free(imagem->pixels[i]);
@@ -118,7 +128,6 @@ int main()
     free(reta->ponto_inicial);
     free(reta->ponto_final);
     free(reta);
-
 
     fclose(arquivo_auxiliar);
     fclose(arquivo_de_especificacao);

@@ -60,11 +60,3 @@ enum operacoes
     Open,
     Image
 } operacoes;
-
-FILE* arquivo_de_especificacao;
-FILE* arquivo_auxiliar;
-
-int operacao;
-image* imagem;
-color* cor;
-line* reta;

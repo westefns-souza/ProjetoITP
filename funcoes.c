@@ -3,7 +3,7 @@
 
 void preencher_imagem(image* imagem, color* cor)
 {
-    for (int linha = 0; linha < imagem->largura; linha++)
+    for (int linha = 0; linha < imagem->altura; linha++)
     {
         for (int coluna = 0; coluna < imagem->largura; coluna++)
         {   
@@ -16,28 +16,29 @@ void preencher_imagem(image* imagem, color* cor)
 
 void gerar_arquivo(FILE* arquivo, image* imagem)
 {
-    fprintf(arquivo, "P3\n");
-    fprintf(arquivo, "%d %d\n", imagem->largura, imagem->altura);
-    fprintf(arquivo, "255\n");
+fprintf(arquivo, "P3\n");
+                fprintf(arquivo, "%d %d\n", imagem->altura, imagem->largura);
+                fprintf(arquivo, "255\n");
 
-    for (int linha = 0; linha < imagem->largura; linha++)
+    for (int linha = 0; linha < imagem->altura; linha++)
     {
         for (int coluna = 0; coluna < imagem->largura; coluna++)
         {
             color cor = imagem->pixels[linha][coluna];
 
             fprintf(arquivo, "%d %d %d\n", cor.r, cor.g, cor.b);
+        
         }
     }
 }
 
 void gerar_linha(image* imagem, line* linha, color* cor)
 {
-    int x1 = linha->ponto_final->x;
     int x0 = linha->ponto_inicial->x;
+    int x1 = linha->ponto_final->x;
 
-    int y1 = linha->ponto_final->y;
     int y0 = linha->ponto_inicial->y;
+    int y1 = linha->ponto_final->y;
 
     int dx = abs(x1-x0);
     int sx = x0 < x1 ? 1 : -1;
@@ -52,7 +53,7 @@ void gerar_linha(image* imagem, line* linha, color* cor)
         imagem->pixels[x0][y0].r = cor->r;
         imagem->pixels[x0][y0].g = cor->g;
         imagem->pixels[x0][y0].b = cor->b;
-        
+
         if (x0==x1 && y0==y1)
             break;
 
