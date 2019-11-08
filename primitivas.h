@@ -1,6 +1,4 @@
 
-
-
 typedef struct color_t
 {
     int r;
@@ -22,12 +20,12 @@ typedef struct ponto_t
     int y;
 } ponto;
 
-typedef struct linha_t
+typedef struct line_t
 {
-    ponto ponto_inicial;
+    ponto *ponto_inicial;
 
-    ponto ponto_final;
-} linha;
+    ponto *ponto_final;
+} line;
 
 typedef struct polygon_t
 {
@@ -62,3 +60,11 @@ enum operacoes
     Open,
     Image
 } operacoes;
+
+FILE* arquivo_de_especificacao;
+FILE* arquivo_auxiliar;
+
+int operacao;
+image* imagem;
+color* cor;
+line* reta;

@@ -4,3 +4,5 @@
 void preencher_imagem(image* imagem, color* cor);
 
 void gerar_arquivo(FILE* arquivo, image* imagem);
+
+void gerar_linha(image* imagem, line* linha, color* cor);
