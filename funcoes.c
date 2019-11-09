@@ -16,9 +16,9 @@ void preencher_imagem(image* imagem, color* cor)
 
 void gerar_arquivo(FILE* arquivo, image* imagem)
 {
-fprintf(arquivo, "P3\n");
-                fprintf(arquivo, "%d %d\n", imagem->altura, imagem->largura);
-                fprintf(arquivo, "255\n");
+    fprintf(arquivo, "P3\n");
+    fprintf(arquivo, "%d %d\n", imagem->altura, imagem->largura);
+    fprintf(arquivo, "255\n");
 
     for (int linha = 0; linha < imagem->altura; linha++)
     {
@@ -27,7 +27,6 @@ fprintf(arquivo, "P3\n");
             color cor = imagem->pixels[linha][coluna];
 
             fprintf(arquivo, "%d %d %d\n", cor.r, cor.g, cor.b);
-        
         }
     }
 }
@@ -68,5 +67,24 @@ void gerar_linha(image* imagem, line* linha, color* cor)
             err += dx;
             y0 += sy; 
         }
+    }
+}
+
+void gerar_poligono(image* imagem, polygon* poligono, color* cor, line* reta)
+{
+    int k;
+    for (int i = 0; i < poligono->quantidade; i++)
+    {
+        reta->ponto_inicial->x = poligono->pontos[i].x; 
+        reta->ponto_inicial->y = poligono->pontos[i].y;
+
+        k = i + 1;
+        if (k == poligono->quantidade)
+            k = 0;
+        
+        reta->ponto_final->x = poligono->pontos[k].x; 
+        reta->ponto_final->y = poligono->pontos[k].y;
+
+        gerar_linha(imagem, reta, cor);
     }
 }

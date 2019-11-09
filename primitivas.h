@@ -53,10 +53,3 @@ typedef struct fill_t
 {
     ponto ponto;
 } fill;
-
-enum operacoes 
-{
-    Save = 1,
-    Open,
-    Image
-} operacoes;

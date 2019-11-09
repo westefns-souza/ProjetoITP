@@ -1,11 +1,11 @@
-image 100 100
+image 200 200
 clear 0 0 0
 color 100 170 200
-line 0 0 99 99
-polygon 3 0 400 300 200 600 400
+polygon 3 0 0 0 100 50 100
 circle 200 100 50
 color 180 30 50
+polygon 3 50 100 100 100 100 0
 fill 300 300
 color 255 0 0
 fill 0 0
-save test3.ppm
+save test.ppm
