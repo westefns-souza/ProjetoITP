@@ -88,3 +88,57 @@ void gerar_poligono(image* imagem, polygon* poligono, color* cor, line* reta)
         gerar_linha(imagem, reta, cor);
     }
 }
+
+void ler_arquivo(char* nome_do_arquivo, image* imagem)
+{
+    FILE* arquivo = fopen(nome_do_arquivo, "r");
+    imagem = malloc(sizeof(image));
+
+    int i = 0;
+    int l = 0;
+    int coluna = 0;
+    while(!feof(arquivo))
+    {
+        char linha[100];
+        char *result;
+
+        result = fgets(linha, 100, arquivo);
+
+        if(result)
+        {
+            if (i == 1)
+            {
+                imagem->altura = atoi(strtok(linha, " "));
+                imagem->largura = atoi(strtok(linha, " "));
+
+                imagem->pixels = malloc(sizeof(color)*imagem->altura);
+
+                for (int i = 0; i < imagem->largura; i++)
+                {
+                    imagem->pixels[i] = malloc(sizeof(color)*imagem->largura);
+                }
+            }
+
+            if (i > 2)
+            {   
+                if(l == imagem->altura)
+                    l = 0;
+
+                if (coluna == imagem->largura)
+                    coluna = 0;
+
+                imagem->pixels[l][coluna].r = atoi(strtok(linha, " "));
+                imagem->pixels[l][coluna].g = atoi(strtok(linha, " "));
+                imagem->pixels[l][coluna].b = atoi(strtok(linha, " "));
+                
+                l++;
+                coluna++;
+            }
+
+        }
+
+        i++;
+    }
+
+    fclose(arquivo);
+}

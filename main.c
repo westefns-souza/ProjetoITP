@@ -105,12 +105,23 @@ int main()
             {
                 char *nome_do_arquivo = strtok(NULL, " ");
 
-                FILE* save = fopen(nome_do_arquivo, "w");
+                FILE* save = fopen(nome_do_arquivo, "w+");
                 gerar_arquivo(save, imagem);
 
                 fclose(save);
 
                continue;
+            }
+
+            operacao = strcmp(token, "open");
+
+            if (operacao == 0)
+            {
+                char *nome_do_arquivo = strtok(NULL, " ");
+
+                ler_arquivo(nome_do_arquivo, imagem);
+
+                continue;
             }
 
         }

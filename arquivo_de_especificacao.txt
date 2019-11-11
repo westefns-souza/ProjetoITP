@@ -8,4 +8,7 @@ polygon 3 50 100 100 100 100 0
 fill 300 300
 color 255 0 0
 fill 0 0
-save test.ppm
+line 0 50 100 50
+save test19.ppm
+open test.ppm
+save test3.ppm
