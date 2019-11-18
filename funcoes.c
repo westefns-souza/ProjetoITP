@@ -89,56 +89,21 @@ void gerar_poligono(image* imagem, polygon* poligono, color* cor, line* reta)
     }
 }
 
-void ler_arquivo(char* nome_do_arquivo, image* imagem)
-{
-    FILE* arquivo = fopen(nome_do_arquivo, "r");
-    imagem = malloc(sizeof(image));
+void gerar_retangulo(image* imagem, rect* retangulo, color* cor, line* reta){
 
-    int i = 0;
-    int l = 0;
-    int coluna = 0;
-    while(!feof(arquivo))
+    int k;
+    for (int i = 0; i < 4; i++)
     {
-        char linha[100];
-        char *result;
+        reta->ponto_inicial->x = retangulo->ponto->x; 
+        reta->ponto_inicial->y = retangulo->ponto->y;
 
-        result = fgets(linha, 100, arquivo);
+        k = i + 1;
+        if (k == 4)
+            k = 0;
+        
+        reta->ponto_final->x = retangulo->largura; 
+        reta->ponto_final->y = poligono->pontos[k].y;
 
-        if(result)
-        {
-            if (i == 1)
-            {
-                imagem->altura = atoi(strtok(linha, " "));
-                imagem->largura = atoi(strtok(linha, " "));
-
-                imagem->pixels = malloc(sizeof(color)*imagem->altura);
-
-                for (int i = 0; i < imagem->largura; i++)
-                {
-                    imagem->pixels[i] = malloc(sizeof(color)*imagem->largura);
-                }
-            }
-
-            if (i > 2)
-            {   
-                if(l == imagem->altura)
-                    l = 0;
-
-                if (coluna == imagem->largura)
-                    coluna = 0;
-
-                imagem->pixels[l][coluna].r = atoi(strtok(linha, " "));
-                imagem->pixels[l][coluna].g = atoi(strtok(linha, " "));
-                imagem->pixels[l][coluna].b = atoi(strtok(linha, " "));
-                
-                l++;
-                coluna++;
-            }
-
-        }
-
-        i++;
+        gerar_linha(imagem, reta, cor);
     }
-
-    fclose(arquivo);
 }

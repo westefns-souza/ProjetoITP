@@ -21,6 +21,8 @@ int main()
 
     polygon* poligono = malloc(sizeof(polygon));
 
+    rect* retangulo = malloc(sizeof(rect));
+
     while(!feof(arquivo_de_especificacao))
     {
         char linha[100];
@@ -88,6 +90,21 @@ int main()
                 continue;
             }
 
+            operacao = strcmp(token, "rect");
+
+            if (operacao == 0)
+            {
+
+                retangulo->ponto->x = atoi(strtok(NULL, " "));
+                retangulo->ponto->y = atoi(strtok(NULL, " "));
+
+                retangulo->altura = atoi(strtok(NULL, " "));
+                retangulo->largura = atoi(strtok(NULL, " "));
+
+                gerar_retangulo(imagem, retangulo, cor, reta);
+                continue;
+            }
+
             operacao = strcmp(token, "color");
 
             if (operacao == 0)
@@ -99,29 +116,31 @@ int main()
                 continue;
             }
 
+            operacao = strcmp(token, "clear");
+
+            if (operacao == 0)
+            {
+                cor->r = atoi(strtok(NULL, " "));
+                cor->g = atoi(strtok(NULL, " "));
+                cor->b = atoi(strtok(NULL, " "));
+
+                preencher_imagem(imagem, cor);
+
+                continue;
+            }
+
             operacao = strcmp(token, "save");
 
             if (operacao == 0)
             {
                 char *nome_do_arquivo = strtok(NULL, " ");
 
-                FILE* save = fopen(nome_do_arquivo, "w+");
+                FILE* save = fopen(nome_do_arquivo, "w");
                 gerar_arquivo(save, imagem);
 
                 fclose(save);
 
                continue;
-            }
-
-            operacao = strcmp(token, "open");
-
-            if (operacao == 0)
-            {
-                char *nome_do_arquivo = strtok(NULL, " ");
-
-                ler_arquivo(nome_do_arquivo, imagem);
-
-                continue;
             }
 
         }
