@@ -3,10 +3,9 @@ clear 0 0 0
 color 255 0 0  
 line 0 0 100 100
 polygon 3 0 0 0 100 50 100
-circle 200 100 50
+circle 10 10 5
 color 0 0 255  
 polygon 3 50 100 100 100 100 0
-fill 300 300
 color 255 0 0
 line 0 0 100 100
 rect 10 10 50 50

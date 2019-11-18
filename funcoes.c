@@ -89,8 +89,13 @@ void gerar_poligono(image* imagem, polygon* poligono, color* cor, line* reta)
     }
 }
 
-void gerar_retangulo(image* imagem, rect* retangulo, color* cor, line* reta){
+void preencher_figura(image* imagem, fill *preencher, color* cor)
+{
+    imagem->pixels[preencher->ponto->x][preencher->ponto->y];
+}
 
+void gerar_retangulo(image* imagem, rect* retangulo, color* cor, line* reta)
+{
     int k;
     for (int i = 0; i < 4; i++)
     {
@@ -102,8 +107,55 @@ void gerar_retangulo(image* imagem, rect* retangulo, color* cor, line* reta){
             k = 0;
         
         reta->ponto_final->x = retangulo->largura; 
-        reta->ponto_final->y = poligono->pontos[k].y;
+        reta->ponto_final->y = retangulo->ponto->y;
 
         gerar_linha(imagem, reta, cor);
+    }
+}
+
+void gerar_circulo(image* imagem, circle* circulo, color* cor)
+{
+    midpointCircle(imagem, circulo, cor);
+}
+
+void pintar_pixel(image* imagem, int x, int y, color* cor)
+{
+    imagem->pixels[x][y].r = cor->r;
+    imagem->pixels[x][y].g = cor->g;
+    imagem->pixels[x][y].b = cor->b;
+}
+
+void circlePoints(image* imagem, ponto* coordenada, color* cor)
+{
+    pintar_pixel(imagem, coordenada->x, coordenada->y, cor);
+    pintar_pixel(imagem,  coordenada->x, -coordenada->y, cor);
+    pintar_pixel(imagem, -coordenada->x, coordenada->y, cor);
+    pintar_pixel(imagem, -coordenada->x, -coordenada->y, cor);
+    pintar_pixel(imagem,  coordenada->y, coordenada->x, cor);
+    pintar_pixel(imagem,  coordenada->y, -coordenada->x, cor);
+    pintar_pixel(imagem, -coordenada->y, coordenada->x, cor);
+    pintar_pixel(imagem, -coordenada->y, -coordenada->x, cor);
+}
+
+void midpointCircle(image* imagem, circle* circulo, color *cor)
+{   
+
+    circulo->ponto->x = 0;
+    circulo->ponto->y = circulo->raio;
+
+    int d = 1 - circulo->raio;
+
+    circlePoints(imagem, circulo->ponto, cor);
+
+    while(circulo->ponto->y > circulo->ponto->x) {
+        if(d < 0)
+            d += 2 * circulo->ponto->x + 3;
+        else
+        {
+            d += 2*( circulo->ponto->x - circulo->ponto->y) + 5;
+            circulo->ponto->y--;
+        }
+        circulo->ponto->x++;
+        circlePoints(imagem, circulo->ponto, cor);
     }
 }

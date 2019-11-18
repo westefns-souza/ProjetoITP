@@ -22,6 +22,13 @@ int main()
     polygon* poligono = malloc(sizeof(polygon));
 
     rect* retangulo = malloc(sizeof(rect));
+    retangulo->ponto = malloc(sizeof(ponto));
+
+    fill *preencher = malloc(sizeof(fill));
+    preencher->ponto = malloc(sizeof(ponto));
+
+    circle *circulo = malloc(sizeof(circle));
+    circulo->ponto = malloc(sizeof(ponto));
 
     while(!feof(arquivo_de_especificacao))
     {
@@ -67,6 +74,32 @@ int main()
                 reta->ponto_final->y = atoi(strtok(NULL, " "));
 
                 gerar_linha(imagem, reta, cor);
+
+                continue;
+            }
+
+            operacao = strcmp(token, "fill");
+
+            if (operacao == 0)
+            {
+                preencher->ponto->x = atoi(strtok(NULL, " "));
+                preencher->ponto->y = atoi(strtok(NULL, " "));
+
+               preencher_figura(imagem, preencher, cor);
+
+               continue;
+            }
+
+            operacao = strcmp(token, "circle");
+
+            if (operacao == 0)
+            {
+                circulo->ponto->x = atoi(strtok(NULL, " "));
+                circulo->ponto->y = atoi(strtok(NULL, " "));
+
+                circulo->raio = atoi(strtok(NULL, " "));
+
+                gerar_circulo(imagem, circulo, cor);
 
                 continue;
             }
@@ -146,6 +179,9 @@ int main()
         }
     }
 
+    free(preencher);
+    free(circulo);
+    free(retangulo);
     free(cor);
 
     for (int i = 0; i < imagem->largura; i++)

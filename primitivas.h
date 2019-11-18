@@ -36,7 +36,7 @@ typedef struct polygon_t
 
 typedef struct rect_t
 {
-    ponto ponto;
+    ponto *ponto;
     
     int altura;
     int largura;
@@ -44,12 +44,12 @@ typedef struct rect_t
 
 typedef struct circle_t
 {
-    ponto ponto;
+    ponto* ponto;
     
     int raio;
 } circle;
 
 typedef struct fill_t
 {
-    ponto ponto;
+    ponto* ponto;
 } fill;
