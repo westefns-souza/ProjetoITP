@@ -13,4 +13,8 @@ void preencher_figura(image* imagem, fill *fill, color* cor);
 
 void gerar_retangulo(image* imagem, rect* retangulo, color* cor, line* reta);
 
-void gerar_circulo(image* imagem, circle* circulo, color* cor, line* reta);
+void gerar_circulo(image* imagem, circle* circulo, color* cor, ponto* coordenada);
+
+void drawCircle(image* imagem, circle* circulo, ponto* coordenada, color* cor);
+
+void putpixel(image* imagem, int linha, int coluna, color* cor);

@@ -30,6 +30,8 @@ int main()
     circle *circulo = malloc(sizeof(circle));
     circulo->ponto = malloc(sizeof(ponto));
 
+    ponto* coordenada = malloc(sizeof(ponto));
+
     while(!feof(arquivo_de_especificacao))
     {
         char linha[100];
@@ -99,7 +101,7 @@ int main()
 
                 circulo->raio = atoi(strtok(NULL, " "));
 
-                gerar_circulo(imagem, circulo, cor, reta);
+                gerar_circulo(imagem, circulo, cor, coordenada);
 
                 continue;
             }
@@ -181,6 +183,7 @@ int main()
     }
 
     free(preencher);
+    free(coordenada);
     free(circulo);
     free(retangulo);
     free(cor);

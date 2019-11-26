@@ -133,18 +133,49 @@ void gerar_retangulo(image* imagem, rect* retangulo, color* cor, line* reta)
     }
 }
 
-void gerar_circulo(image* imagem, circle* circulo, color* cor, line* reta)
+void gerar_circulo(image* imagem, circle* circulo, color* cor, ponto* coordenada)
 {
-    int x, y;
+    coordenada->x = 0;
+    coordenada->y = circulo->raio;
+    int d = 3 - 2 * circulo->raio; 
 
-    reta->ponto_inicial->x = circulo->ponto->x;
-    reta->ponto_inicial->y = circulo->ponto->y;
+    drawCircle(imagem, circulo, coordenada, cor);
 
-    for (int i = 0; i < 360; i++)
-    {
-        reta->ponto_final->x = circulo->ponto->x + circulo->raio * cos(i);
-        reta->ponto_final->y = circulo->ponto->y + circulo->raio * sin(i);
-    
-        gerar_linha(imagem, reta, cor);
-    }
+    while (coordenada->y >= coordenada->x) 
+    {     
+        coordenada->x++;
+  
+        if (d > 0) 
+        { 
+            coordenada->y--;  
+            d = d + 4 * (coordenada->x - coordenada->y) + 10; 
+        } 
+        else
+        {
+            d = d + 4 * coordenada->x + 6; 
+        }
+
+        drawCircle(imagem, circulo, coordenada, cor);
+    } 
+
+}
+
+void drawCircle(image* imagem, circle* circulo, ponto* coordenada, color* cor) 
+{ 
+    // https://www.geeksforgeeks.org/bresenhams-circle-drawing-algorithm/
+    putpixel(imagem, circulo->ponto->x + coordenada->x, circulo->ponto->y + coordenada->y, cor); 
+    putpixel(imagem, circulo->ponto->x - coordenada->x, circulo->ponto->y + coordenada->y, cor); 
+    putpixel(imagem, circulo->ponto->x + coordenada->x, circulo->ponto->y - coordenada->y, cor); 
+    putpixel(imagem, circulo->ponto->x - coordenada->x, circulo->ponto->y - coordenada->y, cor); 
+    putpixel(imagem, circulo->ponto->x + coordenada->y, circulo->ponto->y + coordenada->x, cor); 
+    putpixel(imagem, circulo->ponto->x - coordenada->y, circulo->ponto->y + coordenada->x, cor); 
+    putpixel(imagem, circulo->ponto->x + coordenada->y, circulo->ponto->y - coordenada->x, cor); 
+    putpixel(imagem, circulo->ponto->x - coordenada->y, circulo->ponto->y - coordenada->x, cor); 
+}
+
+void putpixel(image* imagem, int linha, int coluna, color* cor)
+{
+    imagem->pixels[linha][coluna].r = cor->r;
+    imagem->pixels[linha][coluna].g = cor->g;
+    imagem->pixels[linha][coluna].b = cor->b;
 }
