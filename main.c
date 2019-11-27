@@ -27,7 +27,7 @@ int main()
     fill *preencher = malloc(sizeof(fill));
     preencher->ponto = malloc(sizeof(ponto));
 
-    circle *circulo = malloc(sizeof(circle));
+    circle* circulo = malloc(sizeof(circle));
     circulo->ponto = malloc(sizeof(ponto));
 
     ponto* coordenada = malloc(sizeof(ponto));
