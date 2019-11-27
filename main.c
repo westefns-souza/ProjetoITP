@@ -80,17 +80,17 @@ int main()
                 continue;
             }
 
-            // operacao = strcmp(token, "fill");
+            operacao = strcmp(token, "fill");
 
-            // if (operacao == 0)
-            // {
-            //     preencher->ponto->x = atoi(strtok(NULL, " "));
-            //     preencher->ponto->y = atoi(strtok(NULL, " "));
+            if (operacao == 0)
+            {
+                preencher->ponto->x = atoi(strtok(NULL, " "));
+                preencher->ponto->y = atoi(strtok(NULL, " "));
 
-            //    preencher_figura(imagem, preencher, cor);
+               preencher_figura(imagem, preencher, cor);
 
-            //    continue;
-            // }
+               continue;
+            }
 
             operacao = strcmp(token, "circle");
 

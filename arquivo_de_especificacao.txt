@@ -1,10 +1,7 @@
 image 200 200
 clear 0 0 0
-color 255 0 0  
-line 0 0 100 100
-polygon 3 0 0 0 100 50 100
-circle 75 75 50 
-color 0 0 255  
-polygon 3 50 100 100 100 100 0
-rect 75 100 50 100
-save test.ppm
+color 255 0 0
+circle 100 100 50
+color 100 100 100
+fill 100 100
+save fill.ppm

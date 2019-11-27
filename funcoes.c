@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <math.h>
 #include "funcoes.h"
 
 void preencher_imagem(image* imagem, color* cor)
@@ -178,4 +177,84 @@ void putpixel(image* imagem, int linha, int coluna, color* cor)
     imagem->pixels[linha][coluna].r = cor->r;
     imagem->pixels[linha][coluna].g = cor->g;
     imagem->pixels[linha][coluna].b = cor->b;
+}
+
+void preencher_figura(image* imagem, fill* preencher, color* cor)
+{
+    int linha = preencher->ponto->x;
+    int coluna = preencher->ponto->y;
+    color corSubstituir;
+    int pintar = 1;
+    int coletar = 1;
+    color corVerificar;
+
+    corSubstituir = imagem->pixels[linha][coluna];
+
+    putpixel(imagem, preencher->ponto->x, preencher->ponto->y, cor);
+
+    coluna++;
+
+    while (linha < imagem->altura)
+    {
+        while (coluna < imagem->largura)
+        {
+            if (comparar_cor(corSubstituir, imagem->pixels[linha][coluna]) && pintar )
+            {
+                putpixel(imagem, linha, coluna, cor);
+            }
+            else
+            {
+                if(coletar)
+                {
+                    corVerificar = imagem->pixels[linha][coluna];
+                    coletar = 0;
+                }
+
+                if (comparar_cor(corVerificar, imagem->pixels[linha][coluna]) )
+                {
+                    printf("%d %d\n", linha, coluna);
+                    color corr = imagem->pixels[linha][coluna];
+
+                    printf("%d %d %d\n", corr.r, corr.g, corr.b);
+                    
+                    if (pintar)
+                        pintar = 0;
+                    else
+                    {
+                        pintar = 1;
+                    }
+                    
+
+                }
+            }
+            
+            if (linha == preencher->ponto->x && coluna == preencher->ponto->y)
+                break;
+
+            coluna++;
+
+        }
+
+        if (linha == preencher->ponto->x && coluna == preencher->ponto->y)
+                break;
+
+        coluna = 0;
+
+        linha++;
+
+        if (linha == imagem->altura)
+            linha = 0;
+    }
+}
+
+int comparar_cor(color cor1, color cor2)
+{
+    if ((cor1.r == cor2.r) &&
+        (cor1.g == cor2.g) &&
+        (cor1.b == cor2.b))
+    {
+        return 1;
+    }
+
+    return 0;
 }

@@ -18,3 +18,7 @@ void gerar_circulo(image* imagem, circle* circulo, color* cor, ponto* coordenada
 void drawCircle(image* imagem, circle* circulo, ponto* coordenada, color* cor);
 
 void putpixel(image* imagem, int linha, int coluna, color* cor);
+
+void preencher_figura(image* imagem, fill* preencher, color* cor);
+
+int comparar_cor(color cor1, color cor2);
