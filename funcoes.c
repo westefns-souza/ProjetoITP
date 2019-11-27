@@ -211,20 +211,13 @@ void preencher_figura(image* imagem, fill* preencher, color* cor)
                 }
 
                 if (comparar_cor(corVerificar, imagem->pixels[linha][coluna]) )
-                {
-                    printf("%d %d\n", linha, coluna);
-                    color corr = imagem->pixels[linha][coluna];
-
-                    printf("%d %d %d\n", corr.r, corr.g, corr.b);
-                    
+                {                    
                     if (pintar)
                         pintar = 0;
                     else
                     {
                         pintar = 1;
                     }
-                    
-
                 }
             }
             
